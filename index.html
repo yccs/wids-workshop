@@ -464,6 +464,30 @@
     window.addEventListener("load",starter,true);
 
   // WIDS Workshop: Add Offline AppCache "updateready" event listener here
+  
+  if (window.applicationCache) {
+ 
+         window.applicationCache.addEventListener(
+ 
+            'updateready',
+ 
+            function(e) {
+ 
+              var reload = window.confirm('A new version of the game is available. Reload?');
+ 
+              if (reload)
+ 
+                 window.location.reload();
+ 
+            },
+ 
+            false
+ 
+         );
+ 
+       }
+ 
+
 
 </script>
 </head>
