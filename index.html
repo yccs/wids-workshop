@@ -274,6 +274,8 @@
         if (highscore < score) {
           highscore = score;
           document.getElementById("highscore").innerHTML = 'High Score: ' + highscore;
+		  //Donald
+		  putHighScoreToDB();
         }
         isGameOver = true;
         document.getElementById("status").innerHTML = "<p style=\"font-size:20px; color:#333; font-family:Arial;\">Game Over. Press F5 to restart.</p>";
@@ -458,13 +460,83 @@
 
     // WIDS Workshop: this is the window.onload function.
     // Init IndexedDB here and read the save highscore value here.
+	//Donald
+	initDB();
 	}
+	
+	//Donald
+	// Store database reference here
+var iDB;
+var DB_NAME = 'Jump Game';
+var DB_VERSION = 1;
 
+function initDB() {
+ 
+ if (!window.mozIndexedDB || // support IndexedDB, and
+		IDBDatabase.prototype.setVersion) // not the old implementation
+   return;
+
+   // Init DB
+  var req = mozIndexedDB.open(DB_NAME, DB_VERSION);
+  req.onupgradeneeded = function (ev) {
+
+  iDB = ev.target.result;
+
+  if (iDB.objectStoreNames.contains('store')) // object store is already created
+	return;
+
+    // create object store
+    iDB.createObjectStore(
+      'store', { keyPath: 'key' });
+	};
+
+	req.onsuccess = function (ev) {
+    // Save iDB reference
+    iDB = ev.target.result;
+
+    // Database is ready; continue to get high score from db
+    getHighScoreFromDB();
+  };
+}
+
+function getHighScoreFromDB() {
+  if (!iDB) // IndexedDB is not available
+    return;
+
+	var transaction = iDB.transaction('store');
+	var store = transaction.objectStore('store');
+	var req = store.get('highscore');
+	req.onsuccess = function (ev) {
+		// don't bother update if there weren't any value saved before
+		if (!req.result) return;
+
+		highscore = req.result['value'];
+		document.getElementById("highscore").innerHTML = 'High Score: ' + highscore;
+	};
+}
+
+function putHighScoreToDB() {
+  if (!iDB) // IndexedDB is not available
+    return;
+
+	var transaction = iDB.transaction('store', IDBTransaction.READ_WRITE);
+	var store = transaction.objectStore('store');
+	var req = store.put({
+		key: 'highscore',
+		value: highscore
+	});
+	req.onsuccess = function (ev) {
+		// console.log('done');
+	};
+}
+
+	
+	
     //calls init function whenever the page gets fully loaded
     window.addEventListener("load",starter,true);
 
   // WIDS Workshop: Add Offline AppCache "updateready" event listener here
-  
+  //Donald
   if (window.applicationCache) {
  
          window.applicationCache.addEventListener(

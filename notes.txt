@@ -1,0 +1,72 @@
+WIDS Workshop references and code
+(submit your question on the right bottom chat window)
+
+This slide
+https://docs.google.com/presentation/d/12HBFeShoItqBtt1m4pHihuSlITLKgbI6WblKmdjTZfk/edit
+
+The Game
+
+https://developer.mozilla.org/zh-TW/demos/detail/jump-the-wall
+(original)
+
+http://dl.dropbox.com/u/3280607/jump-the-wall.zip
+(with comments and high score display)
+
+Github Pages
+
+Sign up Github: http://github.com/
+Create a new repository
+Go to Admin, turn on Github Pages
+Clone the repository to your hard drive:
+
+git clone <url from github>
+
+Download the game at given URL
+Every time you want to update the files:
+git add .; git commit; git push
+
+URL to the page
+http://username.github.com/repo-name
+
+{
+For People who wanna Use Your Own Apache HTTP Server instead of Github Pages
+
+Include this .htaccess file with the game on your server
+https://raw.github.com/timdream/timdream.github.com/master/.htaccess
+
+If you are using Github Pages, you don't have to do this.
+}
+
+Offline AppCache
+
+Filename: site.appcache
+Content: (see slide)
+
+and then git add .; git commit; git push;
+
+You can validate the site.appcache file at http://manifest-validator.com/
+
+IndexedDB
+
+Initialize database as the page loads
+Get value from database and show it on the page
+Put value into database when it's being updated
+
+The Game
+"Jump the wall" by avnishkgaur
+https://developer.mozilla.org/en-US/demos/detail/jump-the-wall/launch
+
+Answers:
+
+Enable Offline AppCache
+https://github.com/timdream/wids-demo/commit/c96f1e78ca35c62c5fa71c8d63f7e031baee224e
+
+Store high score in IndexedDB
+https://github.com/timdream/wids-demo/commit/91fb3303a232785d5ffa82023f3b39c17cde1f75
+
+Merge two changes
+https://github.com/timdream/wids-demo/tree/completed
+
+Demo site:
+timdream.org/wids-demo/
+
